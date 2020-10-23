@@ -1,0 +1,17 @@
+E:\Git\n0tFlix\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.AssemblyInfoInputs.cache
+E:\Git\n0tFlix\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.AssemblyInfo.cs
+E:\Git\n0tFlix\n0tFlix.Channel.Pornhub\bin\Release\netstandard2.1\n0tFlix.Channel.Pornhub.deps.json
+E:\Git\n0tFlix\n0tFlix.Channel.Pornhub\bin\Release\netstandard2.1\n0tFlix.Channel.Pornhub.dll
+E:\Git\n0tFlix\n0tFlix.Channel.Pornhub\bin\Release\netstandard2.1\n0tFlix.Channel.Pornhub.pdb
+E:\Git\n0tFlix\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.dll
+E:\Git\n0tFlix\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.pdb
+E:\Git\n0tFlix\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.csproj.CoreCompileInputs.cache
+E:\Git\n0tFlix\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.csprojAssemblyReference.cache
+E:\Git\n0tFlix.Channel.Pornhub\bin\Release\netstandard2.1\n0tFlix.Channel.Pornhub.deps.json
+E:\Git\n0tFlix.Channel.Pornhub\bin\Release\netstandard2.1\n0tFlix.Channel.Pornhub.dll
+E:\Git\n0tFlix.Channel.Pornhub\bin\Release\netstandard2.1\n0tFlix.Channel.Pornhub.pdb
+E:\Git\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.AssemblyInfoInputs.cache
+E:\Git\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.AssemblyInfo.cs
+E:\Git\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.csproj.CoreCompileInputs.cache
+E:\Git\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.dll
+E:\Git\n0tFlix.Channel.Pornhub\obj\Release\netstandard2.1\n0tFlix.Channel.Pornhub.pdb
