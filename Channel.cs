@@ -5,6 +5,7 @@ using MediaBrowser.Model.Channels;
 using MediaBrowser.Model.Drawing;
 using MediaBrowser.Model.Dto;
 using MediaBrowser.Model.Entities;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using n0tFlix.Channel.Pornhub.Models;
 using Newtonsoft.Json;
@@ -22,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace n0tFlix.Channel.Pornhub
 {
-    public class Channel : IChannel, IRequiresMediaInfoCallback
+    public class Channel : IChannel, IRequiresMediaInfoCallback, ISupportsLatestMedia
     {
         public string Name => Plugin.Instance.Name;
 
@@ -33,11 +34,13 @@ namespace n0tFlix.Channel.Pornhub
         public string HomePageUrl => "";
 
         private readonly ILogger<Channel> logger;
+        private readonly IMemoryCache memoryCache;
         public ChannelParentalRating ParentalRating => ChannelParentalRating.Adult;
 
-        public Channel(ILogger<Channel> logger)
+        public Channel(ILogger<Channel> logger, IMemoryCache memoryCache)
         {
             this.logger = logger;
+            this.memoryCache = memoryCache;
         }
 
         public InternalChannelFeatures GetChannelFeatures()
@@ -91,11 +94,15 @@ namespace n0tFlix.Channel.Pornhub
             if (string.IsNullOrEmpty(query.FolderId))
                 return await GetCategories();
 
-            return await GetVideoes(query.FolderId);
+            return await GetVideos(query.FolderId);
         }
 
         private async Task<ChannelItemResult> GetCategories()
         {
+            if (memoryCache.TryGetValue("pornhub-categories", out ChannelItemResult o))
+            {
+                return o;
+            }
             HttpClient httpClient = new HttpClient();
             string json = await httpClient.GetStringAsync("https://www.pornhub.com/webmasters/categories");
             var results = JsonConvert.DeserializeObject<CategoryResults.root>(json);
@@ -110,14 +117,19 @@ namespace n0tFlix.Channel.Pornhub
                 });
                 result.TotalRecordCount++;
             }
+            memoryCache.Set("pornhub-categories", result, DateTimeOffset.Now.AddDays(7));
             return result;
         }
 
-        private async Task<ChannelItemResult> GetVideoes(string CategoryName)
+        private async Task<ChannelItemResult> GetVideos(string CategoryName)
         {
+            if (memoryCache.TryGetValue("pornhub-" + CategoryName, out ChannelItemResult o))
+            {
+                return o;
+            }
             HttpClient httpClient = new HttpClient();
             ChannelItemResult result = new ChannelItemResult();
-            for (int i = 1; 2 >= i; i++)
+            for (int i = 1; 10 >= i; i++)
             {
                 string json = new WebClient().DownloadString("https://www.pornhub.com/webmasters/search?q=&category=" + CategoryName + "&ordering=newest&thumbsize=large&page=" + i.ToString());
                 var results = JsonConvert.DeserializeObject<SearchResult.root>(json);
@@ -141,6 +153,9 @@ namespace n0tFlix.Channel.Pornhub
                     result.TotalRecordCount++;
                 }
             }
+
+            memoryCache.Set("pornhub-" + CategoryName, result, DateTimeOffset.Now.AddHours(6));
+
             return result;
         }
 
@@ -227,6 +242,15 @@ namespace n0tFlix.Channel.Pornhub
                 });
             }
             return resu;
+        }
+
+        public async Task<IEnumerable<ChannelItemInfo>> GetLatestMedia(ChannelLatestMediaSearch request, CancellationToken cancellationToken)
+        {
+            var tmp = await GetCategories();
+            int i = (int)(tmp.TotalRecordCount - 1);
+            var videos = await GetVideos(tmp.Items[new Random(DateTime.Now.Millisecond).Next(0, i)].Id);
+            List<ChannelItemInfo> list = videos.Items;
+            return videos.Items;
         }
     }
 }
